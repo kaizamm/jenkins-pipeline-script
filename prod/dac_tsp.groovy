@@ -11,9 +11,7 @@ pipeline {
         }
       }
       steps {
-        codeCheckout {
-          svnRepo="https://qf-project-01.quark.com:8443/svn/DAC/CodeLib/dac/branches/DAC_MOBILE_20170401"
-        }
+        codeCheckout ('zhangsan')
       }
     }
 
