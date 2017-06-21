@@ -25,7 +25,7 @@ pipeline {
 
         sh "${tool 'M3'}/bin/mvn test"
 
-        sh "${tool 'M3'}/bin/mvn mvn -f pom.xml -Pprod clean install -Dmaven.test.skip=true"
+        sh "${tool 'M3'}/bin/mvn -f pom.xml -Pprod clean install -Dmaven.test.skip=true"
 
         stash includes: '**/target/*.war',name: 'app'
       }
