@@ -11,23 +11,9 @@ pipeline {
         }
       }
       steps {
-        checkout([$class: 'SubversionSCM',
-        additionalCredentials: [],
-        excludedCommitMessages: '',
-        excludedRegions: '',
-        excludedRevprop: '',
-        excludedUsers: '',
-        filterChangelog: false,
-        ignoreDirPropChanges: false,
-        includedRegions: '',
-        locations: [[credentialsId: 'c9baf728-2463-4d59-8643-2181a681fdd4', depthOption: 'infinity', ignoreExternalsOption: true, local: '.', remote: 'https://qf-project-01.quark.com:8443/svn/DAC/CodeLib/dac/branches/DAC_MOBILE_20170401']],
-        workspaceUpdater: [$class: 'UpdateUpdater']])
-
-        sh "${tool 'M3'}/bin/mvn test"
-
-        sh "${tool 'M3'}/bin/mvn -f pom.xml -Pprod clean install -Dmaven.test.skip=true"
-
-        stash includes: '**/target/*.war',name: 'app'
+        codeCheckout {
+          svnRepo="https://qf-project-01.quark.com:8443/svn/DAC/CodeLib/dac/branches/DAC_MOBILE_20170401"
+        }
       }
     }
 
@@ -36,7 +22,7 @@ pipeline {
         label 'jenkins-slave-01'
       }
       steps {
-        unstash 'app'
+        echo "ok"
       }
     }
   }
