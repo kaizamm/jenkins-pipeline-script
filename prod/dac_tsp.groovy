@@ -10,11 +10,9 @@ pipeline {
           args '--add-host qf-javadev-01:172.16.1.39 -v /data/maven_repo:/home/qkuser/.m2'
         }
       }
-      steps {
         codeCheckout{
           svnRepo='https://qf-project-01.quark.com:8443/svn/DAC/CodeLib/dac/branches/DAC_MOBILE_20170401'
         }
-      }
     }
 
     stage('Generate Dockerfile') {
