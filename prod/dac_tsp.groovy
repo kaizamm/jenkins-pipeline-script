@@ -38,8 +38,8 @@ node {
   stage('Generate Dockerfile') {
     generateDockerfile {
       propertiesPath = '/data/prepare_dac_tsp.properties'
+      println svnRevision
     }
-    println generateDockerfile.svnRevision
   }
 }
 }
