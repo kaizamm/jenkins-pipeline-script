@@ -19,8 +19,9 @@ node {
   }
   withEnv(envList) {
   stage('Docker Build') {
+    def env.svnRepoAddress
     codeCheckout {
-      def svnRepo="${env.svnRepoAddress}"
+      svnRepo="${env.svnRepoAddress}"
     }
     docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
       stage("检出源码") {
