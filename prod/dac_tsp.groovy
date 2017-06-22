@@ -39,7 +39,7 @@ node {
     generateDockerfile {
       propertiesPath = '/data/prepare_dac_tsp.properties'
     }
-    println "${env.svnRevision}"
+    sh  "echo ${env.svnRevision}"
   }
 }
 }
