@@ -18,7 +18,7 @@ node {
       envList << key+"="+val
   }
   withEnv(envList) {
-  stage('Docker Build') {
+  stage('Docker Package Build') {
     docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
       stage("检出源码") {
         codeCheckout{
@@ -35,11 +35,15 @@ node {
       }
     }
   }
-  stage('Generate Dockerfile') {
-    generateDockerfile {
+  stage('Docker Image Build') {
+    dockerBuild {
       propertiesPath = '/data/prepare_dac_tsp.properties'
     }
-    sh  "echo ${env.svnRevision}"
+  }
+  stage('Deploy Production') {
+    deployContainer {
+      propertiesPath = '/data/prepare_dac_tsp.properties'
+    }
   }
 }
 }
