@@ -22,7 +22,8 @@ node {
     docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
       stage("检出源码") {
         codeCheckout{
-          svnRepo="echo ${env.svnRepoAddress}"
+          // svnRepo="${env.svnRepoAddress}"
+          println "${env.svnRepoAddress}"
         }
       }
       stage("执行测试") {
