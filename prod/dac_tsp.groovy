@@ -1,11 +1,28 @@
 #!/usr/bin/env groovy
 @Library('shareMaven') _
+@NonCPS
+def mapToList(depmap) {
+    def dlist = []
+    for (entry in depmap) {
+        dlist.add([entry.key, entry.value])
+    }
+    dlist
+}
+
 node {
+  def props = readProperties file: "/data/prepare_dac_tsp.properties"
+  def envList = []
+  for (it2 in mapToList(props)) {
+      def key=it2[0]
+      def val=it2[1]
+      envList << key+"="+val
+  }
+  withEnv(envList) {
   stage('Docker Build') {
-    docker.image('172.30.33.31:5000/service/maven:3.5.0-8u74').inside("--add-host qf-javadev-01:172.16.1.39 -v /data/maven_repo:/home/qkuser/.m2") {
+    docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
       stage("检出源码") {
         codeCheckout{
-          svnRepo="https://qf-project-01.quark.com:8443/svn/DAC/CodeLib/dac/branches/DAC_MOBILE_20170401"
+          svnRepo="${env.svnRepo}"
         }
       }
       stage("执行测试") {
@@ -21,4 +38,5 @@ node {
       propertiesPath = '/data/prepare_dac_tsp.properties'
     }
   }
+}
 }
