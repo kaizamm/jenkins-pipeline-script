@@ -22,7 +22,9 @@ node {
     docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
       stage("检出源码") {
         codeCheckout{
-          svnRepo="${this.env.svnRepoAddress}"
+          svnRepo="${this.env.svnRepo}"
+          // svnCredentialsId="${this.env.svnCredentialsId}"
+          // svnLocal="${this.env.svnLocal}"
         }
       }
       stage("执行测试") {
