@@ -23,7 +23,7 @@ node {
       stage("检出源码") {
         println "${env.svnRepoAddress}"
         codeCheckout{
-          // svnRepo="${env.svnRepoAddress}"
+          svnRepo="${env.svnRepoAddress}"
         }
       }
       stage("执行测试") {
