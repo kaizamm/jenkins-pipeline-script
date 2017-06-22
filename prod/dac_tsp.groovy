@@ -21,6 +21,7 @@ node {
   stage('Docker Build') {
     docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
       stage("检出源码") {
+        println "${env.svnRepo}"
         codeCheckout{
           svnRepo="${env.svnRepo}"
         }
