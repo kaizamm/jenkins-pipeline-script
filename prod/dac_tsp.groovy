@@ -19,15 +19,11 @@ node {
   }
   withEnv(envList) {
   stage('Docker Build') {
-    codeCheckout {
-      def env.svnRepoAddress
-      svnRepo="${env.svnRepoAddress}"
-    }
     docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
       stage("检出源码") {
-        // codeCheckout{
-        //   svnRepo="${env.svnRepoAddress}"
-        // }
+        codeCheckout{
+          svnRepo="echo ${env.svnRepoAddress}"
+        }
       }
       stage("执行测试") {
         mvnTest()
