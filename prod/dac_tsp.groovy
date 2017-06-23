@@ -1,22 +1,8 @@
 #!/usr/bin/env groovy
 @Library('shareMaven') _
-@NonCPS
-def mapToList(depmap) {
-    def dlist = []
-    for (entry in depmap) {
-        dlist.add([entry.key, entry.value])
-    }
-    dlist
-}
 
 node {
-  def props = readProperties file: "/data/prepare_dac_tsp.properties"
-  def envList = []
-  for (it2 in mapToList(props)) {
-      def key=it2[0]
-      def val=it2[1]
-      envList << key+"="+val
-  }
+  def envList = myLoadProperties "/data/prepare_dac_tsp.properties"
   withEnv(envList) {
     stage ('选择动作') {
       def actionInput = input (
