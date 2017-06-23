@@ -2,8 +2,8 @@
 @Library('shareMaven') _
 
 node {
-  withEnv("${env.envList}") {
-    env.envList = myLoadProperties "/data/prepare_dac_tsp.properties"
+  def envList = myLoadProperties "/data/prepare_dac_tsp.properties"
+  withEnv(envList) {
     stage ('选择动作') {
       def actionInput = input (
         id: 'actionInput', message: 'Choice your action!', parameters: [
