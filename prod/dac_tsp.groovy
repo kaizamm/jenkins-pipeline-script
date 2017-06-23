@@ -31,7 +31,7 @@ node {
         // docker 镜像构建
         stage('镜像构建') {
           dockerBuild {
-            propertiesPath = '/data/prepare_dac_tsp.properties'
+            // propertiesPath = '/data/prepare_dac_tsp.properties'
           }
         }
 
