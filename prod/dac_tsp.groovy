@@ -23,7 +23,6 @@ node {
       id: 'actionInput', message: 'Choice your action!', parameters: [
       [$class: 'ChoiceParameterDefinition', choices: "deploy\nrollback", description: 'choice your action!', name: 'action']
       ])
-    }
     def action = actionInput.trim()
     if (action == 'deploy') {
         docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
@@ -60,4 +59,5 @@ node {
       }
     }
   }
+}
 }
