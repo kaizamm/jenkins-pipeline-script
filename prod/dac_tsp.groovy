@@ -3,7 +3,7 @@
 
 node {
   // def envList = myLoadProperties "/data/prepare_dac_tsp.properties"
-  withEnv(env.envList) {
+  withEnv("${env.envList}") {
     stage ('选择动作') {
       def actionInput = input (
         id: 'actionInput', message: 'Choice your action!', parameters: [
