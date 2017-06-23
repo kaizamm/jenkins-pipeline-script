@@ -18,7 +18,7 @@ node {
       envList << key+"="+val
   }
   withEnv(envList) {
-    stage 'Choice action'
+    stage '选择动作'
     def actionInput = input (
       id: 'actionInput', message: 'Choice your action!', parameters: [
       [$class: 'ChoiceParameterDefinition', choices: "deploy\nrollback", description: 'choice your action!', name: 'action']
@@ -26,7 +26,7 @@ node {
     def action = actionInput.trim()
 
     if (action == 'deploy') {
-      stage('Docker Package Build') {
+      // stage('Docker Package Build') {
         docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
           stage("检出源码") {
             codeCheckout{
@@ -42,19 +42,19 @@ node {
             mvnPackage()
           }
         }
-      }
-      stage('Docker Image Build') {
+      // }
+      stage('镜像构建') {
         dockerBuild {
           propertiesPath = '/data/prepare_dac_tsp.properties'
         }
       }
-      stage('Deploy Production') {
+      stage('部署生产') {
         deployContainer {
           propertiesPath = '/data/prepare_dac_tsp.properties'
         }
       }
     } else {
-      stage('RollBack') {
+      stage('版本回滚') {
         rollbackContainer {
           propertiesPath = '/data/prepare_dac_tsp.properties'
         }
