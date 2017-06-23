@@ -25,7 +25,7 @@ node {
       ])
     def action = actionInput.trim()
   }
-    if (${action} == 'deploy') {
+    if ("${action}" == 'deploy') {
         docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
           stage("检出源码") {
             codeCheckout{
