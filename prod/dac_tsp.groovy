@@ -18,7 +18,7 @@ node {
       envList << key+"="+val
   }
   withEnv(envList) {
-    stage '选择动作' {
+    stage ('选择动作') {
     def actionInput = input (
       id: 'actionInput', message: 'Choice your action!', parameters: [
       [$class: 'ChoiceParameterDefinition', choices: "deploy\nrollback", description: 'choice your action!', name: 'action']
