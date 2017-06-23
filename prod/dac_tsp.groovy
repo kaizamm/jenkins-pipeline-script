@@ -26,7 +26,6 @@ node {
     def action = actionInput.trim()
 
     if (action == 'deploy') {
-      // stage('Docker Package Build') {
         docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
           stage("检出源码") {
             codeCheckout{
@@ -42,7 +41,6 @@ node {
             mvnPackage()
           }
         }
-      // }
       stage('镜像构建') {
         dockerBuild {
           propertiesPath = '/data/prepare_dac_tsp.properties'
