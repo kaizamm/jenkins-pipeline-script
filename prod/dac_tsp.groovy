@@ -38,7 +38,7 @@ node {
           stage("执行测试") {
             mvnTest()
           }
-          stage("执行构建") {
+          stage("包构建") {
             mvnPackage()
           }
         }
@@ -57,6 +57,7 @@ node {
       stage('版本回滚') {
         rollbackContainer {
           propertiesPath = '/data/prepare_dac_tsp.properties'
+          getRegistryTagList= '/data/jenkins_etcd/getRegistryTagList.py'
         }
       }
     }
