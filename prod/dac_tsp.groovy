@@ -18,32 +18,47 @@ node {
       envList << key+"="+val
   }
   withEnv(envList) {
-  stage('Docker Package Build') {
-    docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
-      stage("检出源码") {
-        codeCheckout{
-          svnRepo="${this.env.svnRepo}"
-          // svnCredentialsId="${this.env.svnCredentialsId}"
-          // svnLocal="${this.env.svnLocal}"
+    stage 'Choice action'
+    def actionInput = input (
+      id: 'actionInput', message: 'Choice your action!', parameters: [
+      [$class: 'ChoiceParameterDefinition', choices: "deploy\nrollback", description: 'choice your action!', name: 'action']
+      ])
+    def action = actionInput.trim()
+
+    if (action == 'deploy') {
+      stage('Docker Package Build') {
+        docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
+          stage("检出源码") {
+            codeCheckout{
+              svnRepo="${this.env.svnRepo}"
+              // svnCredentialsId="${this.env.svnCredentialsId}"
+              // svnLocal="${this.env.svnLocal}"
+            }
+          }
+          stage("执行测试") {
+            mvnTest()
+          }
+          stage("执行构建") {
+            mvnPackage()
+          }
         }
       }
-      stage("执行测试") {
-        mvnTest()
+      stage('Docker Image Build') {
+        dockerBuild {
+          propertiesPath = '/data/prepare_dac_tsp.properties'
+        }
       }
-      stage("执行构建") {
-        mvnPackage()
+      stage('Deploy Production') {
+        deployContainer {
+          propertiesPath = '/data/prepare_dac_tsp.properties'
+        }
+      }
+    } else {
+      stage('RollBack') {
+        rollbackContainer {
+          propertiesPath = '/data/prepare_dac_tsp.properties'
+        }
       }
     }
   }
-  stage('Docker Image Build') {
-    dockerBuild {
-      propertiesPath = '/data/prepare_dac_tsp.properties'
-    }
-  }
-  stage('Deploy Production') {
-    deployContainer {
-      propertiesPath = '/data/prepare_dac_tsp.properties'
-    }
-  }
-}
 }
