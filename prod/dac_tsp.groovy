@@ -5,6 +5,7 @@ node {
   def envList = myLoadProperties "/data/prepare_dac_tsp.properties"
   withEnv(envList) {
     stage ('选择动作') {
+      try {
       def actionInput = input (
         id: 'actionInput', message: 'Choice your action!', parameters: [
         [$class: 'ChoiceParameterDefinition', choices: "deploy\nrollback", description: 'choice your action!', name: 'action']
@@ -31,7 +32,7 @@ node {
         // docker 镜像构建
         stage('镜像构建') {
           dockerBuild {
-            // propertiesPath = '/data/prepare_dac_tsp.properties'
+            propertiesPath = '/data/prepare_dac_tsp.properties'
           }
         }
 
@@ -51,12 +52,10 @@ node {
         }
       }
     }
-  }
-  post {
-    always {
-      sendEmail {
-        emailRecipients = "${env.projectRecipientList}"
-      }
+  } catch (exc) {
+    sendEmail {
+      emailRecipients= "${env.projectRecipientList}"
     }
+  }
   }
 }
