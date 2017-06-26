@@ -54,7 +54,7 @@ node {
 
   } catch (exc) {
     sendEmail {
-      emailRecipients= "${env.projectRecipientList}"
+      emailRecipients= "${env.projectRecipientList}".trim()
     }
   }
   }
