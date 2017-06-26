@@ -55,6 +55,7 @@ node {
   } catch (exc) {
     sendEmail {
       emailRecipients= 'ChenglanGuo@quarkfinance.com'
+      println "${env.projectRecipientList}".trim()
     }
   }
   }
