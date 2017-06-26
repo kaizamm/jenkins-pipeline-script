@@ -6,10 +6,11 @@ node {
   withEnv(envList) {
     stage ('选择动作') {
       try {
-        def actionInput = input (
-          id: 'actionInput', message: 'Choice your action!', parameters: [
-          [$class: 'ChoiceParameterDefinition', choices: "deploy\nrollback", description: 'choice your action!', name: 'action']])
-        def action = actionInput.trim()
+        // def actionInput = input (
+        //   id: 'actionInput', message: 'Choice your action!', parameters: [
+        //   [$class: 'ChoiceParameterDefinition', choices: "deploy\nrollback", description: 'choice your action!', name: 'action']])
+        // def action = actionInput.trim()
+        choiceAction {}
         if (action == 'deploy') {
           // 在docker内部代码检出、执行测试、执行包构建
           docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
@@ -53,6 +54,7 @@ node {
       } catch (exc) {
         sendEmail {
           emailRecipients= "${this.env.projectRecipientList}"
+          error exc
         }
       }
     }
