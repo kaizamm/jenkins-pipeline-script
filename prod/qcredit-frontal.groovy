@@ -53,7 +53,7 @@ node {
 
             }
             stage("执行测试") {
-              mvnTest()
+              // mvnTest()
             }
             stage("包构建") {
               mvnPackage("${this.env.mavenOpts}")
