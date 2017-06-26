@@ -3,7 +3,7 @@
 
 node {
   // 读取properties文件
-  def envList = myLoadProperties "/data/prepare_dac_tsp.properties"
+  def envList = myLoadProperties "/data/jenkinspipeline.properties"
   withEnv(envList) {
     stage ('选择动作') {
       try {
@@ -31,21 +31,21 @@ node {
           // docker 镜像构建
           stage('镜像构建') {
             dockerBuild {
-              propertiesPath = '/data/prepare_dac_tsp.properties'
+              propertiesPath = '/data/jenkinspipeline.properties'
             }
           }
 
           // 部署操作
           stage('部署生产') {
             deployContainer {
-              propertiesPath = '/data/prepare_dac_tsp.properties'
+              propertiesPath = '/data/jenkinspipeline.properties'
             }
           }
         } else {
           // 版本回滚操作，针对镜像的版本回滚，会调用共享库类的几个stage操作
           stage('版本回滚') {
             rollbackContainer {
-              propertiesPath = '/data/prepare_dac_tsp.properties'
+              propertiesPath = '/data/jenkinspipeline.properties'
               getRegistryTagList= '/data/jenkins_etcd/getRegistryTagList.py'
             }
           }
