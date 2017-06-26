@@ -10,8 +10,8 @@ node {
         //   id: 'actionInput', message: 'Choice your action!', parameters: [
         //   [$class: 'ChoiceParameterDefinition', choices: "deploy\nrollback", description: 'choice your action!', name: 'action']])
         // def action = actionInput.trim()
-        choiceAction ()
-        if (action == 'deploy') {
+        def choiceAction= choiceAction ()
+        if (choiceAction == 'deploy') {
           // 在docker内部代码检出、执行测试、执行包构建
           docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
             stage("检出源码") {
