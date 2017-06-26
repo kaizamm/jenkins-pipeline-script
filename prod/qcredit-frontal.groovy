@@ -53,6 +53,8 @@ node {
 
             }
             stage("执行测试") {
+              // mvnTest()
+              //如果有参数可以加上下面的这条，从properties文件中读取
               mvnTest("${this.env.mavenTestOpts}")
             }
             stage("包构建") {
