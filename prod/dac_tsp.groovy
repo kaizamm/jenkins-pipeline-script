@@ -22,7 +22,7 @@ node {
             }
             stage("执行测试") {
               // mvnTest()
-              mvnTest("${this.env.mavenTestOpts}".replace("null",""))
+              mvnTest("${this.env.mavenTestOpts}".replace("null",null))
             }
             stage("包构建") {
               mvnPackage("${this.env.mavenPackageOpts}")
