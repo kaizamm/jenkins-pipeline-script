@@ -21,10 +21,10 @@ node {
               }
             }
             stage("执行测试") {
-              mvnTest()
+              mvnTest("${this.env.mavenTestOpts}")
             }
             stage("包构建") {
-              mvnPackage("${this.env.mavenOpts}")
+              mvnPackage("${this.env.mavenPackageOpts}")
             }
           }
 
