@@ -52,4 +52,11 @@ node {
       }
     }
   }
+  post {
+    always {
+      sendEmail {
+        emailRecipients = "${env.projectRecipientList}"
+      }
+    }
+  }
 }
