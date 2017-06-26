@@ -2,18 +2,17 @@
 @Library('shareMaven') _
 
 node {
+  // 读取properties文件
   def envList = myLoadProperties "/data/prepare_dac_tsp.properties"
   withEnv(envList) {
     stage ('选择动作') {
       try {
-        // def actionInput = input (
-        //   id: 'actionInput', message: 'Choice your action!', parameters: [
-        //   [$class: 'ChoiceParameterDefinition', choices: "deploy\nrollback", description: 'choice your action!', name: 'action']])
-        // def action = actionInput.trim()
-        def choiceAction= choiceAction ()
-        if (choiceAction == 'deploy') {
+        // action 选择，有deploy和rollback两种动作
+        def action = choiceAction ()
+
+        if (action == 'deploy') {
           // 在docker内部代码检出、执行测试、执行包构建
-          docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenOpt}") {
+          docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenRunOpt}") {
             stage("检出源码") {
               codeCheckout{
                 svnRepo="${this.env.svnRepo}"
@@ -25,7 +24,7 @@ node {
               mvnTest()
             }
             stage("包构建") {
-              mvnPackage()
+              mvnPackage("${this.env.mavenOpt}")
             }
           }
 
