@@ -51,7 +51,7 @@ node {
           }
         }
       }
-    }
+
   } catch (exc) {
     sendEmail {
       emailRecipients= "${env.projectRecipientList}"
