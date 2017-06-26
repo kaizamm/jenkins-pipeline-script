@@ -53,8 +53,8 @@ node {
 
             }
             stage("执行测试") {
+              // 如果代码是取到当前"."目录下，则直接用下面即可
               // mvnTest()
-              //如果有参数可以加上下面的这条，从properties文件中读取
               mvnTest("${this.env.mavenTestOpts}")
             }
             stage("包构建") {
