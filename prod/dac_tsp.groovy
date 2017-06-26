@@ -12,7 +12,7 @@ node {
 
         if (action == 'deploy') {
           // 在docker内部代码检出、执行测试、执行包构建
-          docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenRunOpt}") {
+          docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenRunOpts}") {
             stage("检出源码") {
               codeCheckout{
                 svnRepo="${this.env.svnRepo}"
@@ -24,7 +24,7 @@ node {
               mvnTest()
             }
             stage("包构建") {
-              mvnPackage("${this.env.mavenOpt}")
+              mvnPackage("${this.env.mavenOpts}")
             }
           }
 
