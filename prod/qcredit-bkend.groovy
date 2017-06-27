@@ -61,7 +61,7 @@ node {
             }
             stage("包构建") {
               mvnPackage("${this.env.mavenPackageOpts}")
-              // mvnPackage()
+              mvnPackage('-f qcredit-bkend/pom.xml clean install war:war -Dmaven.test.skip=true')
             }
           }
 
