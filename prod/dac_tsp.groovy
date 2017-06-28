@@ -38,21 +38,21 @@ node {
           // docker 镜像构建
           stage('镜像构建') {
             dockerBuild {
-              propertiesPath = '/data/jenkinspipeline.properties'
+              propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
             }
           }
 
           // 部署操作
           stage('部署生产') {
             deployContainer {
-              propertiesPath = '/data/jenkinspipeline.properties'
+              propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
             }
           }
         } else {
           // 版本回滚操作，针对镜像的版本回滚，会调用共享库类的几个stage操作
           stage('版本回滚') {
             rollbackContainer {
-              propertiesPath = '/data/jenkinspipeline.properties'
+              propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
               getRegistryTagList= '/data/jenkins_etcd/getRegistryTagList.py'
             }
           }
