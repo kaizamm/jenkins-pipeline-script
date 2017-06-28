@@ -7,7 +7,7 @@ node {
   // def envList = myLoadProperties "/data/jenkins_etcd/appCfgs/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
   def envList = myLoadProperties ("172.30.33.31",2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties")
   println envList
-  withEnv(envList) {
+  withEnv(envList,env) {
     stage ('选择动作') {
       try {
         // action 选择，有deploy和rollback两种动作
@@ -38,21 +38,21 @@ node {
           // docker 镜像构建
           stage('镜像构建') {
             dockerBuild {
-              propertiesPath = "/quarkfinance.com/instances/${this.env.JOB_BASE_NAME}/jenkinspipeline.properties"
+              propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
             }
           }
 
           // 部署操作
           stage('部署生产') {
             deployContainer {
-              propertiesPath = "/quarkfinance.com/instances/${this.env.JOB_BASE_NAME}/jenkinspipeline.properties"
+              propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
             }
           }
         } else {
           // 版本回滚操作，针对镜像的版本回滚，会调用共享库类的几个stage操作
           stage('版本回滚') {
             rollbackContainer {
-              propertiesPath = "/quarkfinance.com/instances/${this.env.JOB_BASE_NAME}/jenkinspipeline.properties"
+              propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
               getRegistryTagList= '/data/jenkins_etcd/getRegistryTagList.py'
             }
           }
