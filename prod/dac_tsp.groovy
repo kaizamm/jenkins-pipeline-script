@@ -2,8 +2,10 @@
 @Library('shareMaven') _
 
 node {
+  // def applicationConfigPath = "/data/jenkins_etcd/appcfgs"
   // 读取properties文件
   def envList = myLoadProperties "/data/jenkins_etcd/appCfgs/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
+  println envList
   withEnv(envList) {
     stage ('选择动作') {
       try {
