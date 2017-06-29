@@ -58,6 +58,7 @@ node {
           }
           stage("包构建") {
             mvnPackage("${this.env.mavenPackageOpts}")
+            mvnPackage("${this.env.mavenPackageOpts2}")
           }
         }
         // docker 镜像构建
