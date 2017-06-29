@@ -5,8 +5,9 @@ node {
   // def applicationConfigPath = "/data/jenkins_etcd/appcfgs"
   // 读取properties文件
   // def envList = myLoadProperties "/data/jenkins_etcd/appCfgs/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
-  env.envList = myLoadProperties ("172.30.33.31",2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties")
-  withEnv(env.envList) {
+  def location="/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
+  def envList = myLoadProperties ("172.30.33.31",2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties")
+  withEnv(envList) {
     stage ('选择动作') {
       try {
         // action 选择，有deploy和rollback两种动作
@@ -37,7 +38,7 @@ node {
           // docker 镜像构建
           stage('镜像构建') {
             dockerBuild {
-              propertiesPath = "/quarkfinance.com/instances/${this.env.JOB_BASE_NAME}/jenkinspipeline.properties"
+              propertiesPath = "${location}"
             }
           }
 
