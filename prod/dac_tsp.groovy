@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library('shareMaven')
+@Library('shareMaven') _
 node {
   def envList = myLoadProperties ("172.30.33.31",2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties")
   stage('选择动作') {
