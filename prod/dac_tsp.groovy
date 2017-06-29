@@ -17,7 +17,7 @@ node {
           docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenRunOpts}") {
             stage("检出源码") {
               codeCheckout{
-                svnRepo="${env.svnRepo}"
+                svnRepo="${this.env.svnRepo}"
                 // svnCredentialsId="${this.env.svnCredentialsId}"
                 // svnLocal="${this.env.svnLocal}"
               }
@@ -30,7 +30,7 @@ node {
               mvnTest()
             }
             stage("包构建") {
-              mvnPackage("${env.mavenPackageOpts}")
+              mvnPackage("${this.env.mavenPackageOpts}")
             }
           }
 
@@ -62,7 +62,7 @@ node {
         }
       } catch (exc) {
         sendEmail {
-          emailRecipients= "${env.projectRecipientList}"
+          emailRecipients= "${this.env.projectRecipientList}"
           error exc
         }
       }
