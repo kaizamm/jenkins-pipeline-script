@@ -56,7 +56,7 @@ node {
           stage('版本回滚') {
             rollbackContainer {
               // propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
-              // getRegistryTagList= '/data/jenkins_etcd/getRegistryTagList.py'
+              getRegistryTagList= '/data/jenkins_etcd/getRegistryTagList.py'
             }
           }
         }
