@@ -5,9 +5,8 @@ node {
   // def applicationConfigPath = "/data/jenkins_etcd/appcfgs"
   // 读取properties文件
   // def envList = myLoadProperties "/data/jenkins_etcd/appCfgs/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
-  location="/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
-  def envList = myLoadProperties ("172.30.33.31",2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties")
-  withEnv(envList) {
+  myLoadProperties ("172.30.33.31",2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties")
+  // withEnv(envList) {
     stage ('选择动作') {
       try {
         // action 选择，有deploy和rollback两种动作
@@ -18,7 +17,7 @@ node {
           docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenRunOpts}") {
             stage("检出源码") {
               codeCheckout{
-                svnRepo="${this.env.svnRepo}"
+                svnRepo="${env.svnRepo}"
                 // svnCredentialsId="${this.env.svnCredentialsId}"
                 // svnLocal="${this.env.svnLocal}"
               }
@@ -31,7 +30,7 @@ node {
               mvnTest()
             }
             stage("包构建") {
-              mvnPackage("${this.env.mavenPackageOpts}")
+              mvnPackage("${env.mavenPackageOpts}")
             }
           }
 
@@ -47,26 +46,26 @@ node {
           // 部署操作
           stage('部署生产') {
             deployContainer {
-              host = "172.30.33.31"
-              port = 2379
-              location = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
+              // host = "172.30.33.31"
+              // port = 2379
+              // location = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
             }
           }
         } else {
           // 版本回滚操作，针对镜像的版本回滚，会调用共享库类的几个stage操作
           stage('版本回滚') {
             rollbackContainer {
-              propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
-              getRegistryTagList= '/data/jenkins_etcd/getRegistryTagList.py'
+              // propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
+              // getRegistryTagList= '/data/jenkins_etcd/getRegistryTagList.py'
             }
           }
         }
       } catch (exc) {
         sendEmail {
-          emailRecipients= "${this.env.projectRecipientList}"
+          emailRecipients= "${env.projectRecipientList}"
           error exc
         }
       }
     }
-  }
+  // }
 }
