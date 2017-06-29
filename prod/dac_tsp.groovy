@@ -5,7 +5,7 @@ node {
   // def applicationConfigPath = "/data/jenkins_etcd/appcfgs"
   // 读取properties文件
   // def envList = myLoadProperties "/data/jenkins_etcd/appCfgs/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
-  myLoadProperties ('172.30.33.31',2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties")
+  myLoadProperties ('172.30.33.31',2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties",env)
   // withEnv(envList) {
     stage ('选择动作') {
       try {
