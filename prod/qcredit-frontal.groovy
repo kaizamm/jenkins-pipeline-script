@@ -3,7 +3,8 @@
 
 node {
   // 读取properties文件
-  myLoadProperties ('172.30.33.31',2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties")
+  def s=myLoadProperties ('172.30.33.31',2379,"/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties")
+  println s
   stage ('选择动作') {
     try {
       // action 选择，有deploy和rollback两种动作
