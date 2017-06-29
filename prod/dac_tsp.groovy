@@ -37,9 +37,9 @@ node {
           // docker 镜像构建
           stage('镜像构建') {
             dockerBuild {
-              host = "172.30.33.31"
-              port = 2379
-              location = "${location}"
+              // host = "172.30.33.31"
+              // port = 2379
+              // location = "${location}"
             }
           }
 
