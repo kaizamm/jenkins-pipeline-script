@@ -38,14 +38,18 @@ node {
           // docker 镜像构建
           stage('镜像构建') {
             dockerBuild {
-              propertiesPath = "${location}"
+              host = "172.30.33.31"
+              port = 2379
+              location = "${location}"
             }
           }
 
           // 部署操作
           stage('部署生产') {
             deployContainer {
-              propertiesPath = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
+              host = "172.30.33.31"
+              port = 2379
+              location = "/quarkfinance.com/instances/${env.JOB_BASE_NAME}/jenkinspipeline.properties"
             }
           }
         } else {
