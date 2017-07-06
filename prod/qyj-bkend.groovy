@@ -15,15 +15,15 @@ node {
             codeCheckout{
               svnRepo="${this.env.svnRepo}"
               // svnCredentialsId="${this.env.svnCredentialsId}"
-              // svnLocal="${this.env.svnLocal}"
+              svnLocal="${this.env.svnLocal}"
             }
           }
           stage("执行测试") {
             // 如果代码是取到当前"."目录下，则直接用下面即可
             // mvnTest()
             // 否则使用properties里面的内容
-            // mvnTest("${this.env.mavenTestOpts}")
-            mvnTest()
+            mvnTest("${this.env.mavenTestOpts}")
+            // mvnTest()
           }
           stage("包构建") {
             mvnPackage("${this.env.mavenPackageOpts}")
