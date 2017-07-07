@@ -16,7 +16,6 @@ node {
               svnRepo="${this.env.svnRepo}"
               // svnCredentialsId="${this.env.svnCredentialsId}"
               //svnLocal="${this.env.svnLocal}"
-              svnLocal="${this.env.qfBaseLocal}"
             }
           }
           stage("执行测试") {
