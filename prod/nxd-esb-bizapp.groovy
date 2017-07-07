@@ -13,7 +13,7 @@ node {
         docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenRunOpts}") {
           stage("检出源码") {
             codeCheckout{
-              svnRepo="${this.env.svnRepo}"
+              gitRepo="${this.env.gitRepo}"
               // svnCredentialsId="${this.env.svnCredentialsId}"
               // svnLocal="${this.env.svnLocal}"
             }
