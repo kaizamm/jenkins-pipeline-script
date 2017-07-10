@@ -35,7 +35,10 @@ node {
         }
         // 部署操作
         stage('部署生产') {
-          deployContainer {}
+          deployContainer {
+            projectName = "${this.env.projectName}"
+            packageName = "${this.env.appTargetName}"
+          }
         }
       } else {
         // 版本回滚操作，针对镜像的版本回滚，会调用共享库类的几个stage操作

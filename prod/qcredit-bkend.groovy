@@ -63,7 +63,10 @@ node {
         }
         // docker 镜像构建
         stage('镜像构建') {
-          dockerBuild {}
+          dockerBuild {
+            projectName = "${this.env.projectName}"
+            packageName = "${this.env.appTargetName}"
+          }
         }
         // 部署操作
         stage('部署生产') {
