@@ -63,14 +63,14 @@ node {
         }
         // docker 镜像构建
         stage('镜像构建') {
-          dockerBuild {}
-        }
-        // 部署操作
-        stage('部署生产') {
-          deployContainer {
+          dockerBuild {
             projectName = "${this.env.projectName}"
             packageName = "${this.env.appTargetName}"
           }
+        }
+        // 部署操作
+        stage('部署生产') {
+          deployContainer {}
         }
       } else {
         // 版本回滚操作，针对镜像的版本回滚，会调用共享库类的几个stage操作
