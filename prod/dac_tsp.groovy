@@ -34,6 +34,7 @@ node {
           dockerBuild {
             projectName = "${this.env.projectName}"
             packageName = "${this.env.appTargetName}"
+            remoteDir = "${this.env.remoteDir}"
           }
         }
         // 部署操作
