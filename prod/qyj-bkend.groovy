@@ -15,7 +15,7 @@ node {
             codeCheckout{
               svnRepo="${this.env.svnRepo}"
               // svnCredentialsId="${this.env.svnCredentialsId}"
-              //svnLocal="${this.env.svnLocal}"
+              svnLocal="${this.env.svnLocal}"
             }
           }
           //stage("执行测试") {
