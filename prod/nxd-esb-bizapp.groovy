@@ -12,7 +12,7 @@ node {
         // 在docker内部代码检出、执行测试、执行包构建
         docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenRunOpts}") {
           stage("检出源码") {
-            codeCheckout{
+            gitCodeCheckout{
               gitRepo="${this.env.gitRepo}"
               // svnCredentialsId="${this.env.svnCredentialsId}"
               // svnLocal="${this.env.svnLocal}"
