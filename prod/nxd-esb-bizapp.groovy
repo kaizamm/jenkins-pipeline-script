@@ -16,6 +16,7 @@ node {
               gitRepo="${this.env.gitRepo}"
               // svnCredentialsId="${this.env.svnCredentialsId}"
               // svnLocal="${this.env.svnLocal}"
+              gitLocal="${this.env.gitLocal}"
             }
           }
           stage("执行测试") {
