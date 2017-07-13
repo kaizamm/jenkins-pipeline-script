@@ -44,10 +44,10 @@ node {
               svnLocal="${this.env.qcreditBkendLocal}"
             }
             // 检出qcredit-frontal
-            codeCheckout {
-              svnRepo="${this.env.qcreditFrontalRepo}"
-              svnLocal="${this.env.qcreditFrontalLocal}"
-            }
+            // codeCheckout {
+            //   svnRepo="${this.env.qcreditFrontalRepo}"
+            //   svnLocal="${this.env.qcreditFrontalLocal}"
+            // }
           }
           stage("执行测试") {
             // 如果代码是取到当前"."目录下，则直接用下面即可
