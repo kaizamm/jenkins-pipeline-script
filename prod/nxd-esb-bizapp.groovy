@@ -17,6 +17,7 @@ node {
               // svnCredentialsId="${this.env.svnCredentialsId}"
               // svnLocal="${this.env.svnLocal}"
               gitLocal="${this.env.gitLocal}"
+              gitTag="${this.env.gitTag}"
             }
           }
           //stage("执行测试") {
