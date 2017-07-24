@@ -7,7 +7,10 @@ node {
   stage ('选择动作') {
     try {
       // action 选择，有deploy和rollback两种动作
-      def action = choiceAction ()
+      //def action = choiceAction ()
+      
+      action="${this.env.action}"
+      
       if (action == 'deploy') {
         // 在docker内部代码检出、执行测试、执行包构建
         docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenRunOpts}") {
