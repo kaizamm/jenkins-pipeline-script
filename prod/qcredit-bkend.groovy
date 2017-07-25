@@ -79,7 +79,7 @@ node {
         stage('健康检查') {
 
           healthyCheckScript= '/data/jenkins_etcd/healthyCheck.py'
-          def healthyCheck= sh (script: "python ${healthyCheckScript} ${env.url_check}",returnStdout: true)
+          sh (script: "python ${healthyCheckScript} ${env.url_check}",returnStdout: true)
           }
 
       } else {
