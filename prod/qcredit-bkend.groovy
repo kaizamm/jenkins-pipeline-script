@@ -8,9 +8,9 @@ node {
     try {
       // action 选择，有deploy和rollback两种动作
       //def action = choiceAction ()
-      
+
       action="${this.env.action}"
-      
+
       if (action == 'deploy') {
         // 在docker内部代码检出、执行测试、执行包构建
         docker.image("${env.dockerMavenImage}").inside("${env.dockerMavenRunOpts}") {
@@ -74,6 +74,14 @@ node {
         // 部署操作
         stage('部署生产') {
           deployContainer {}
+        }
+        // 健康检查
+        stage('健康检查') {
+
+          healthyCheckScript= '/data/jenkins_etcd/healthyCheck.py'
+          def allImage =sh (script: "python ${config.healthyCheckScript} ${env.url_check}",returnStdout: true)
+
+          }
         }
       } else {
         // 版本回滚操作，针对镜像的版本回滚，会调用共享库类的几个stage操作
