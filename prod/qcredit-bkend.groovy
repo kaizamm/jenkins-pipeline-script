@@ -79,9 +79,9 @@ node {
         stage('健康检查') {
 
           healthyCheckScript= '/data/jenkins_etcd/healthyCheck.py'
-          def healthyCheck= sh (script: "python ${config.healthyCheckScript} ${env.url_check}",returnStdout: true)
+          def healthyCheck= sh (script: "python ${healthyCheckScript} ${env.url_check}",returnStdout: true)
           }
-        
+
       } else {
         // 版本回滚操作，针对镜像的版本回滚，会调用共享库类的几个stage操作
         stage('版本回滚') {
