@@ -79,7 +79,10 @@ node {
         stage('健康检查') {
 
           healthyCheckScript= '/data/jenkins_etcd/healthyCheck.py'
-          def allImage =sh (script: "python ${config.healthyCheckScript} ${env.url_check}",returnStdout: true)
+          try {
+          sh (script: "python ${config.healthyCheckScript} ${env.url_check}",returnStdout: true)
+          }catch (err) {
+            println "Failled: ${err}"
 
           }
         }
